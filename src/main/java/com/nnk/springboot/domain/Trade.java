@@ -211,4 +211,8 @@ public class Trade {
     public void setSide(String side) {
         this.side = side;
     }
+
+
+
+
 }
