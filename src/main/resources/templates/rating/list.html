@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8"/>
-<title>Home</title>
-<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+	<meta charset="utf-8"/>
+	<title>Rating List</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
@@ -17,9 +17,9 @@
 			<a href="/ruleName/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
-			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
+			Logged in user: <b th:text="${githubLogin}">Guest</b>
 			<form th:action="@{/app-logout}" method="POST">
-				<input type="submit" value="Logout"/>
+				<input type="submit" value="Logout" class="btn btn-secondary btn-sm"/>
 			</form>
 		</div>
 	</div>
@@ -28,17 +28,27 @@
 		<a href="/rating/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
 			<thead>
-				<tr>
-					<th>Id</th>
-					<th>MoodysRating</th>
-					<th>SandPRating</th>
-					<th>FitchRating</th>
-					<th>Order</th>
-					<th>Action</th>
-				</tr>
+			<tr>
+				<th>Id</th>
+				<th>MoodysRating</th>
+				<th>SandPRating</th>
+				<th>FitchRating</th>
+				<th>Order</th>
+				<th>Action</th>
+			</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Rating to the table, the Action column will have Edit & Delete buttons -->
+			<tr th:each="rating : ${ratings}">
+				<td th:text="${rating.id}">Id</td>
+				<td th:text="${rating.moodysRating}">MoodysRating</td>
+				<td th:text="${rating.sandPRating}">SandPRating</td>
+				<td th:text="${rating.fitchRating}">FitchRating</td>
+				<td th:text="${rating.orderNumber}">Order</td>
+				<td>
+					<a th:href="@{/rating/update/{id}(id=${rating.id})}" class="btn btn-warning btn-sm">Edit</a>
+					<a th:href="@{/rating/delete/{id}(id=${rating.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this rating?');">Delete</a>
+				</td>
+			</tr>
 			</tbody>
 		</table>
 	</div>

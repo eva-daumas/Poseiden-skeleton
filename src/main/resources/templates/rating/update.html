@@ -3,11 +3,27 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8"/>
-	<title>Home</title>
-	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+	<title>Update Rating</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
+
+	<div class="row">
+		<div class="col-6">
+			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+			<a href="/ruleName/list">Rule</a>
+		</div>
+		<div class="col-6 text-right">
+			Logged in user: <b th:text="${githubLogin}">Guest</b>
+			<form th:action="@{/app-logout}" method="POST">
+				<input type="submit" value="Logout" class="btn btn-secondary btn-sm"/>
+			</form>
+		</div>
+	</div>
 
 	<div class="row">
 		<h2>Update Rating</h2>
@@ -15,9 +31,54 @@
 
 	<div class="row">
 		<form action="#" th:action="@{/rating/update/{id}(id=${rating.id})}" th:object="${rating}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of Rating, there are 2 buttons: Update data and Cancel to the Rating
-			 -->
+
+			<!-- ID field (hidden) -->
+			<input type="hidden" th:field="*{id}" />
+
+			<!-- Moodys Rating field -->
+			<div class="form-group">
+				<label for="moodysRating" class="col-sm-2 control-label">Moodys Rating</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{moodysRating}" id="moodysRating" class="form-control" placeholder="Enter Moodys rating"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('moodysRating')}" th:errors="*{moodysRating}"></span>
+				</div>
+			</div>
+
+			<!-- SandP Rating field -->
+			<div class="form-group">
+				<label for="sandPRating" class="col-sm-2 control-label">SandP Rating</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{sandPRating}" id="sandPRating" class="form-control" placeholder="Enter SandP rating"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('sandPRating')}" th:errors="*{sandPRating}"></span>
+				</div>
+			</div>
+
+			<!-- Fitch Rating field -->
+			<div class="form-group">
+				<label for="fitchRating" class="col-sm-2 control-label">Fitch Rating</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{fitchRating}" id="fitchRating" class="form-control" placeholder="Enter Fitch rating"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('fitchRating')}" th:errors="*{fitchRating}"></span>
+				</div>
+			</div>
+
+			<!-- Order Number field -->
+			<div class="form-group">
+				<label for="orderNumber" class="col-sm-2 control-label">Order Number</label>
+				<div class="col-sm-10">
+					<input type="number" th:field="*{orderNumber}" id="orderNumber" class="form-control" placeholder="Enter order number"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}"></span>
+				</div>
+			</div>
+
+			<!-- Buttons -->
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Update</button>
+					<a th:href="@{/rating/list}" class="btn btn-default">Cancel</a>
+				</div>
+			</div>
+
 		</form>
 	</div>
 

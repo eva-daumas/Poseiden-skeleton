@@ -3,21 +3,99 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8"/>
-	<title>Home</title>
-	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+	<title>Update Rule</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
 
 	<div class="row">
-		<h2>Update New Rule</h2>
+		<div class="col-6">
+			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+			<a href="/ruleName/list">Rule</a>
+		</div>
+		<div class="col-6 text-right">
+			Logged in user: <b th:text="${githubLogin}">Guest</b>
+			<form th:action="@{/app-logout}" method="POST">
+				<input type="submit" value="Logout" class="btn btn-secondary btn-sm"/>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<h2>Update Rule</h2>
 	</div>
 
 	<div class="row">
 		<form action="#" th:action="@{/ruleName/update/{id}(id=${ruleName.id})}" th:object="${ruleName}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of RuleName, there are 2 buttons: Update data and Cancel to the RuleName
-			 -->
+
+			<!-- ID field (hidden) -->
+			<input type="hidden" th:field="*{id}" />
+
+			<!-- Name field -->
+			<div class="form-group">
+				<label for="name" class="col-sm-2 control-label">Name</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{name}" id="name" class="form-control" placeholder="Enter rule name"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+				</div>
+			</div>
+
+			<!-- Description field -->
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">Description</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{description}" id="description" class="form-control" placeholder="Enter rule description"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+				</div>
+			</div>
+
+			<!-- JSON field -->
+			<div class="form-group">
+				<label for="json" class="col-sm-2 control-label">JSON</label>
+				<div class="col-sm-10">
+					<textarea th:field="*{json}" id="json" class="form-control" placeholder="Enter JSON configuration" rows="3"></textarea>
+					<span class="text-danger" th:if="${#fields.hasErrors('json')}" th:errors="*{json}"></span>
+				</div>
+			</div>
+
+			<!-- Template field -->
+			<div class="form-group">
+				<label for="template" class="col-sm-2 control-label">Template</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{template}" id="template" class="form-control" placeholder="Enter template"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('template')}" th:errors="*{template}"></span>
+				</div>
+			</div>
+
+			<!-- SQL field -->
+			<div class="form-group">
+				<label for="sqlStr" class="col-sm-2 control-label">SQL</label>
+				<div class="col-sm-10">
+					<textarea th:field="*{sqlStr}" id="sqlStr" class="form-control" placeholder="Enter SQL statement" rows="3"></textarea>
+					<span class="text-danger" th:if="${#fields.hasErrors('sqlStr')}" th:errors="*{sqlStr}"></span>
+				</div>
+			</div>
+
+			<!-- SQL Part field -->
+			<div class="form-group">
+				<label for="sqlPart" class="col-sm-2 control-label">SQL Part</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{sqlPart}" id="sqlPart" class="form-control" placeholder="Enter SQL part"/>
+					<span class="text-danger" th:if="${#fields.hasErrors('sqlPart')}" th:errors="*{sqlPart}"></span>
+				</div>
+			</div>
+
+			<!-- Buttons -->
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Update</button>
+					<a th:href="@{/ruleName/list}" class="btn btn-default">Cancel</a>
+				</div>
+			</div>
 
 		</form>
 	</div>
